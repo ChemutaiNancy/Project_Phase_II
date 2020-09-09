@@ -23,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
 //                bundle.putInt(ViewPagerFragment.KEY_LEADERBOAD_INDEX, index);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_activity_layout, new ViewPagerFragment())
-                        .addToBackStack(null).commit();
+                        .commit();
             }
         } );
+
+//        .addToBackStack(null)
     }
 }
