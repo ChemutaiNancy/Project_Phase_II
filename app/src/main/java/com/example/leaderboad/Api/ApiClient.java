@@ -26,12 +26,12 @@ public class ApiClient {
     }
 
     public static ApiLeaderService getLeaders(){
-        ApiLeaderService apiLeaderService = getRetrofit().create(ApiLeaderService.class);
-        return apiLeaderService;
+        ApiLeaderService leaderService = getRetrofit().create(ApiLeaderService.class);
+        return leaderService;
     }
 
     public static ApiSkillService getSkillIq(){
-        ApiSkillService apiSkillService = getRetrofit().create(ApiSkillService.class);
-        return apiSkillService;
+        ApiSkillService skillService = getRetrofit().create(ApiSkillService.class);
+        return skillService;
     }
 }

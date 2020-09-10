@@ -1,5 +1,6 @@
 package com.example.leaderboad.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,40 +16,58 @@ import com.example.leaderboad.R;
 import java.util.List;
 
 
-public class SkillIqAdapter extends RecyclerView.Adapter<SkillIqAdapter.ViewHolder> {
+public class SkillIqAdapter extends RecyclerView.Adapter<SkillIqAdapter.SkillViewHolder> {
 
-    List<SkillIqModel> skillIqModels;
+    List<SkillIqModel> skillIqModelList;
+    Context context;
+
+    public SkillIqAdapter() {
+
+    }
+
+    public void setSkillData(List<SkillIqModel> skillIqModels) {
+        this.skillIqModelList = skillIqModels;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
-    public SkillIqAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate( R.layout.list_skill_iq, parent, false);
-        return new ViewHolder(view);
+    public SkillIqAdapter.SkillViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        return new SkillIqAdapter.SkillViewHolder(LayoutInflater.from(context)
+                .inflate(R.layout.list_skill_iq, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SkillIqAdapter.ViewHolder holder, int position) {
-        holder.imgSkillIq.setImageResource(skillIqModels.get(position).getSkillImage());
-        holder.tvSkillName.setText(skillIqModels.get(position).getSkillIqName());
-        holder.tvSkill.setText(skillIqModels.get(position).getSkillIq());
+    public void onBindViewHolder(@NonNull SkillIqAdapter.SkillViewHolder holder, int position) {
+        SkillIqModel skillIqModel = skillIqModelList.get(position);
+
+        int image = skillIqModel.getSkillImage();
+        String name = skillIqModel.getSkillIqName();
+        String skill_iq = skillIqModel.getSkillIq();
+
+        holder.skillImage.setImageResource(image);
+        holder.tvName.setText(name);
+        holder.tvSkillIq.setText(skill_iq);
     }
 
     @Override
     public int getItemCount() {
-        return skillIqModels.size();
+        return skillIqModelList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class SkillViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imgSkillIq;
-        TextView tvSkillName;
-        TextView tvSkill;
+        ImageView skillImage;
+        TextView tvName;
+        TextView tvSkillIq;
+        public SkillViewHolder(@NonNull View itemView) {
+            super( itemView );
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imgSkillIq = itemView.findViewById(R.id.imgSkill);
-            tvSkillName = itemView.findViewById(R.id.txtSkillName);
-            tvSkill = itemView.findViewById(R.id.txtSkillIq);
+            skillImage = itemView.findViewById(R.id.imgSkill);
+            tvName = itemView.findViewById(R.id.txtSkillName);
+            tvSkillIq = itemView.findViewById(R.id.txtSkillIq);
         }
     }
 }

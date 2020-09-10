@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,18 +34,22 @@ public class SkillIqFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_skill_iq, container, false);
 
         recyclerView = view.findViewById(R.id.skillRecyclerview);
-        recyclerView.setHasFixedSize( true );
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         skillIqAdapter = new SkillIqAdapter();
-        recyclerView.setAdapter(skillIqAdapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager( getActivity() );
-        recyclerView.setLayoutManager(layoutManager);
+        getSkillDetails();
+        return view;
+    }
 
+    public void getSkillDetails(){
         Call<List<SkillIqModel>> skillList = ApiClient.getSkillIq().getSkillIqDetails();
         skillList.enqueue( new Callback<List<SkillIqModel>>() {
             @Override
             public void onResponse(Call<List<SkillIqModel>> call, Response<List<SkillIqModel>> response) {
                 if (response.isSuccessful()){
-                    Log.e( "Success", "onResponse: " + response.body().toString());
+                    List<SkillIqModel> skillIqModelList = response.body();
+                    skillIqAdapter.setSkillData(skillIqModelList);
+                    recyclerView.setAdapter(skillIqAdapter);
                 }
             }
 
@@ -53,7 +58,5 @@ public class SkillIqFragment extends Fragment {
                 Log.e( "Failure", "onFailure: " + t.getLocalizedMessage());
             }
         } );
-
-        return view;
     }
 }

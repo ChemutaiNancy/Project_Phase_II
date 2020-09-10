@@ -3,6 +3,7 @@ package com.example.leaderboad;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.leaderboad.Adapter.LeaderBoadAdapter;
+import com.example.leaderboad.Adapter.SkillIqAdapter;
 import com.example.leaderboad.Api.ApiClient;
 import com.example.leaderboad.Model.LeaderboadModel;
+import com.example.leaderboad.Model.SkillIqModel;
 
 import java.util.List;
 
@@ -27,12 +30,10 @@ public class LeaderBoadFragment extends Fragment {
 
     RecyclerView recyclerView;
     LeaderBoadAdapter leaderBoadAdapter;
-//    List<LeaderboadModel> leaderboadModelList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-
 
     }
 
@@ -41,18 +42,22 @@ public class LeaderBoadFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.fragment_leader_boad, container, false );
         recyclerView = view.findViewById(R.id.leaderboadRecyclerview);
-        recyclerView.setHasFixedSize( true );
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         leaderBoadAdapter = new LeaderBoadAdapter();
-        recyclerView.setAdapter(leaderBoadAdapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager( getActivity() );
-        recyclerView.setLayoutManager( layoutManager );
+        getLeaderDetails();
+        return view;
+    }
 
+    public void getLeaderDetails(){
         Call<List<LeaderboadModel>> leaderlist = ApiClient.getLeaders().getLeadersDetails();
         leaderlist.enqueue( new Callback<List<LeaderboadModel>>() {
             @Override
             public void onResponse(Call<List<LeaderboadModel>> call, Response<List<LeaderboadModel>> response) {
                 if (response.isSuccessful()){
-                    Log.e( "Success", "onResponse: " + response.body().toString());
+                    List<LeaderboadModel> leaderboadModelList = response.body();
+                    leaderBoadAdapter.setLeaderboadDetails(leaderboadModelList);
+                    recyclerView.setAdapter(leaderBoadAdapter);
                 }
             }
 
@@ -61,11 +66,7 @@ public class LeaderBoadFragment extends Fragment {
                 Log.e( "Failure", "onFailure: " + t.getLocalizedMessage());
             }
         } );
-
-
-        return view;
     }
-
 
 }
 //    Fetching data via a simple API request with Retrofit

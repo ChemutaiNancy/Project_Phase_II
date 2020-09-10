@@ -14,7 +14,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 public class ViewPagerFragment extends Fragment {
-//    public static final String KEY_LEADERBOAD_INDEX = "leaderboad index";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
