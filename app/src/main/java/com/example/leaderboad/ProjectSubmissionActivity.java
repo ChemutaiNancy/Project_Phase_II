@@ -54,7 +54,7 @@ public class ProjectSubmissionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 submitProject();
 
-                if (view.isSaveEnabled())
+//                if (view.isSaveEnabled())
                     openConfirmationDialog();
             }
         } );
@@ -62,7 +62,7 @@ public class ProjectSubmissionActivity extends AppCompatActivity {
 
     private void submitProject() {
 
-        Call<POST> submitProject = projectSubmissionApi.submitProject("First Name", "Last Name", "Email", "GitHub Link");
+        Call<POST> submitProject = projectSubmissionApi.submitProject("Nancy", "Chemutai", "chemutain@gmail.com", "https://github.com/ChemutaiNancy/Project_Phase_II");
         submitProject.enqueue( new Callback<POST>() {
             @Override
             public void onResponse(Call<POST> call, Response<POST> response) {
