@@ -1,9 +1,11 @@
 package com.example.leaderboad;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,10 +16,23 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 public class ViewPagerFragment extends Fragment {
+    private Button buttonSubmit;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viewpager, container, false);
+
+        buttonSubmit = view.findViewById(R.id.btnSubmit);
+        buttonSubmit.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Bundle bundle = new Bundle();
+//                getFragmentManager().beginTransaction().replace(R.id.view_pager, ProjectSubmissionActivity.class)
+//                        .addToBackStack(null).commit();
+                startActivity(new Intent(getContext(), ProjectSubmissionActivity.class) );
+            }
+        } );
 
         final LeaderBoadFragment leaderBoadFragment = new LeaderBoadFragment();
         final SkillIqFragment skillIqFragment = new SkillIqFragment();
@@ -45,11 +60,14 @@ public class ViewPagerFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
         return view;
+
+//        OnSubmitButtonSelected submitListener = (OnSubmitButtonSelected) getActivity();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        getActivity().setTitle(getResources().getString(R.string.app_name));
+//        getActivity().setTitle("Leaderboad");
     }
+
 }

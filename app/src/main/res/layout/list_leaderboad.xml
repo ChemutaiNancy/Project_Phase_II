@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@android:color/white"
     android:weightSum="4">
 
     <ImageView
@@ -31,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:textSize="24sp"
-        android:text="TextView" />
+        android:textColor="@android:color/black"
+        android:text="@string/leader_name" />
 
     <TextView
         android:id="@+id/txtHours"
@@ -39,7 +41,8 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:layout_margin="12dp"
-        android:text="TextView" />
+        android:textColor="@android:color/black"
+        android:text="@string/leader_hours" />
 
     </LinearLayout>
 </LinearLayout>
